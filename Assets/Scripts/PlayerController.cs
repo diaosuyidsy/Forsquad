@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
 
     public float velocity = 2f;
-    public GameObject BulletPrefab;
     // Used for turning
     private Vector3 turnSignPos;
 
@@ -18,21 +17,21 @@ public class PlayerController : MonoBehaviour
 
     private void Move ()
     {
-        Vector3 moveDirection = new Vector3 (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical"));
-        transform.Translate (moveDirection * velocity * Time.deltaTime, Space.World);
-
-        // Turn Function, only works if player hit secondary joystick
-        float turnHorizontal = Input.GetAxis ("FaceHorizontal");
-        float turnVertical = Input.GetAxis ("FaceVertical");
-        if (turnHorizontal != 0 || turnVertical != 0)
+        float moveHorizontal = Input.GetAxis ("Horizontal");
+        float moveVertical = Input.GetAxis ("Vertical");
+        if (moveHorizontal != 0 || moveVertical != 0)
         {
-            turnSignPos = transform.position + new Vector3 (turnHorizontal, -1f * turnVertical);
+            Vector3 moveDirection = new Vector3 (moveHorizontal, moveVertical);
+            transform.Translate (moveDirection * velocity * Time.deltaTime, Space.World);
+            turnSignPos = transform.position + new Vector3 (moveHorizontal, moveVertical);
             Vector3 diff = turnSignPos - transform.position;
             diff.Normalize ();
 
             float rot_z = Mathf.Atan2 (diff.y, diff.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler (0f, 0f, rot_z - 90f);
         }
+
+
     }
 
 }
