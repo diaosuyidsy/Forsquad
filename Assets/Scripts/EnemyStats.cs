@@ -11,6 +11,9 @@ public class EnemyStats : MonoBehaviour
     [Range (0f, 2.0f)]
     public float maxArmor = 1f;
 
+    [Tooltip ("Max Walk Speed, default is 1, meaning walking at 100% speed")]
+    public float walkSpeed = 1f;
+
     public GameObject BloodParPrefab;
 
     private float Armor;

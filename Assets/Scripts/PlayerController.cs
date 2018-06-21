@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
         if (moveHorizontal != 0 || moveVertical != 0)
         {
             Vector3 moveDirection = new Vector3 (moveHorizontal, moveVertical);
-            transform.Translate (moveDirection * velocity * Time.deltaTime, Space.World);
+            transform.Translate (moveDirection * velocity * Time.deltaTime * GetComponent<PlayerStats> ().getWalkSpeed (), Space.World);
             turnSignPos = transform.position + new Vector3 (moveHorizontal, moveVertical);
             Vector3 diff = turnSignPos - transform.position;
             diff.Normalize ();
