@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     [Tooltip ("A actual game obejct that Hold skills picked up")]
     public GameObject SkillPhysicalHodler;
+    // A = 0, B = 1, X = 2, Y = 3
     private GameObject[] SkillHolder;
 
     [Tooltip ("Layer for skills that can be picked up")]
@@ -23,7 +24,31 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        CheckSkillButton ();
         Move ();
+    }
+
+    /// <summary>
+    /// Basically Checks if player has hit a skill button or not
+    /// </summary>
+    private void CheckSkillButton ()
+    {
+        if (Input.GetButtonDown ("A"))
+        {
+            OnSkillButtonDown (0);
+        }
+        if (Input.GetButtonDown ("B"))
+        {
+            OnSkillButtonDown (1);
+        }
+        if (Input.GetButtonDown ("X"))
+        {
+            OnSkillButtonDown (2);
+        }
+        if (Input.GetButtonDown ("Y"))
+        {
+            OnSkillButtonDown (3);
+        }
     }
 
     private void Move ()
@@ -69,6 +94,10 @@ public class PlayerController : MonoBehaviour
         // First, if player already has a skill at [num], then spill that out
         if (SkillHolder[num] != null)
         {
+            // First need to make it visible and useable
+            SkillHolder[num].GetComponent<SpriteRenderer> ().enabled = true;
+            SkillHolder[num].GetComponent<BoxCollider2D> ().enabled = true;
+
             // Detach physical skill would be sufficient, but you know
             SkillHolder[num].transform.parent = null;
             SkillHolder[num] = null;
@@ -77,7 +106,8 @@ public class PlayerController : MonoBehaviour
         SkillHolder[num] = skill.gameObject;
         skill.transform.SetParent (SkillPhysicalHodler.transform);
         // TODO: Make original skill seem invisible
-
+        skill.GetComponent<SpriteRenderer> ().enabled = false;
+        skill.GetComponent<BoxCollider2D> ().enabled = false;
 
     }
 
