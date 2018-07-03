@@ -48,7 +48,6 @@ public class Enemy_1_Charge : Action
         // If is charging, then return Taskstatus running
         if (charging)
         {
-            // TODO:Need to face the player all the time
             // Need to make enemy always face player
             Vector3 diff = Target.Value.transform.position - transform.position;
             diff.Normalize ();
@@ -60,6 +59,12 @@ public class Enemy_1_Charge : Action
             return TaskStatus.Running;
         }
 
+        charging = false;
         return TaskStatus.Success;
+    }
+
+    public override void OnEnd ()
+    {
+        charging = false;
     }
 }
